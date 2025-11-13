@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design Portfolio Showcase</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary-color: #8a2be2;
+      --secondary-color: #9932cc;
+      --accent-color: #ba55d3;
+      --dark-color: #0d0818;
+      --light-color: #f8f0ff;
+    }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding-top: 80px; /* space for sticky navbar */
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      color: var(--light-color);
+      position: relative;
+      background: #0d0818;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: url("design1.jpg");
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.25) blur(1px);
+    }
+    .portfolio-showcase {
+      padding: 4rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .showcase-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .showcase-title {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: white;
+      text-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--primary-color);
+      margin-bottom: 2rem;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 1.5rem 2rem;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      max-width: 700px;
+      margin: 0 auto;
+      color: #ddd;
+      font-size: 1rem;
+      line-height: 1.6;
+      transition: 0.4s ease;
+    }
+    .glass-card:hover {
+      box-shadow: 0 0 25px var(--accent-color), 0 0 50px var(--primary-color);
+    }
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+      perspective: 1200px;
+    }
+    .portfolio-item:nth-child(3n+1) {
+      grid-row: span 2;
+    }
+    .portfolio-item:nth-child(5n+3) {
+      grid-column: span 2;
+    }
+    .portfolio-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: #1a1029;
+      border: 1px solid var(--accent-color);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.5s forwards;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .portfolio-item:hover {
+      box-shadow: 0 0 20px var(--primary-color), 0 0 40px var(--accent-color);
+    }
+    .portfolio-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+    }
+    .portfolio-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(13, 8, 24, 0.3), rgba(13, 8, 24, 0.9));
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      transition: all 0.5s ease;
+      backdrop-filter: blur(3px);
+    }
+    .portfolio-item:hover .portfolio-overlay {
+      opacity: 1;
+    }
+    .portfolio-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .portfolio-category {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 1rem;
+    }
+    .portfolio-link {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      background-color: var(--accent-color);
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .portfolio-link:hover {
+      background-color: var(--dark-color);
+    }
+    .showcase-load-more {
+      display: block;
+      margin: 3rem auto 0;
+      padding: 0.8rem 2rem;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+    .showcase-load-more:hover {
+      background-color: var(--dark-color);
+    }
+    .loading {
+      display: none;
+      margin: 2rem auto;
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--light-color);
+    }
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+    .modal img {
+      max-width: 90%;
+      max-height: 90%;
+      border: 3px solid var(--accent-color);
+      border-radius: 1rem;
+    }
+    .modal-close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 0.3rem 0.8rem;
+      border-radius: 50%;
+    }
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 768px) {
+      .showcase-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      .showcase-title {
+        font-size: 2rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .showcase-title {
+        font-size: 1.8rem;
+      }
+      .glass-card {
+        padding: 1rem;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 🌟 Sticky Glass Nav -->
+<nav class="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/10 border-b border-white/20 shadow-md text-white">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div class="text-2xl font-bold">Portfolio</div>
+    <div class="hidden md:flex gap-6 text-sm font-medium">
+      <a href="index.html" class="hover:text-purple-300">Home</a>
+      <a href="about.html" class="hover:text-purple-300">About</a>
+      <a href="skills.html" class="hover:text-purple-300">Skills</a>
+      <a href="projects.html" class="hover:text-purple-300">Projects</a>
+       <a href="design.html" class="hover:text-purple-300">Designs</a>
+      <a href="education.html" class="hover:text-purple-300">Education</a>
+      <a href="certificates.html" class="hover:text-purple-300">Certifications</a>
+      <a href="contact2.html" class="hover:text-purple-300">Lets Connect</a>
+    </div>
+    <div class="md:hidden">
+      <button id="navToggle" class="text-white focus:outline-none">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="md:hidden hidden px-4 pb-4">
+    <a href="index.html" class="block py-2 hover:text-purple-300">Home</a>
+    <a href="about.html" class="block py-2 hover:text-purple-300">About</a>
+    <a href="skills.html" class="block py-2 hover:text-purple-300">Skills</a>
+    <a href="projects.html" class="block py-2 hover:text-purple-300">Projects</a>
+    <a href="education.html" class="block py-2 hover:text-purple-300">Education</a>
+    <a href="certificates.html" class="block py-2 hover:text-purple-300">Certifications</a>
+    <a href="contact2.html" class="block py-2 hover:text-purple-300">Contact</a>
+  </div>
+</nav>
+
+<!-- 👇 Your Portfolio Grid Section -->
+<section class="portfolio-showcase">
+  <div class="showcase-header">
+    <h1 class="showcase-title">Crafted Canvas🔮💻</h1>
+    <div class="glass-card">
+      💻📱 Take a glimpse into the world of designs I've passionately crafted — where creativity meets precision. 🖌️💡🔮
+      <br><br>
+    </div>
+  </div>
+  <div class="showcase-grid" id="showcaseGrid"></div>
+  <div class="loading" id="loading">Loading more Designs...💡🔮</div>
+  <button class="showcase-load-more" id="loadMore">Load More Designs 🔮</button>
+</section>
+
+<!-- Image Modal -->
+<div class="modal" id="imageModal">
+  <span class="modal-close" onclick="closeModal()">&times;</span>
+  <img id="modalImg" src="" alt="Preview" />
+</div>
+
+<script>
+  const portfolioData = [
+    { title: "Assessments page design", category: "web", year: "2025", image: "images/image2.png" },
+    { title: "Sentinel based App Home Page", category: "web", year: "2025", image: "images/image1.png" },
+    { title: "Mahabharata Home Page", category: "UI/UX", year: "2025", image: "images/image.png" },
+    { title: "Blog Layout Design", category: "web", year: "2025", image: "images/image3.png" },
+    { title: "Flash Screen", category: "web", year: "2025", image: "images/image4.png" },
+    { title: "Vintage card design", category: "UI/UX", year: "2025", image: "images/image5.png" },
+    { title: "BlueShield-CRZ Main HomeScreen", category: "web", year: "2025", image: "images/image6.png" },
+    { title: "Vintage Aestehe", category: "UI/UX", year: "2025", image: "images/image7.png" },
+    { title: "Tickit Layout", category: "web", year: "2025", image: "images/image8.png" },
+    { title: "Tickit Design", category: "UI/UX", year: "2025", image: "images/image9.png" },
+    { title: "About Us Page", category: "web", year: "2024", image: "images/image10.png" },
+    { title: "Sleep Tracker App", category: "mobile", year: "2024", image: "images/image11.png" }
+  ];
+
+  const grid = document.getElementById('showcaseGrid');
+  const loadMoreBtn = document.getElementById('loadMore');
+  const loadingIndicator = document.getElementById('loading');
+  let loadedItems = 0;
+  const loadCount = 6;
+
+  function apply3DEffect(item) {
+    item.addEventListener('mousemove', (e) => {
+      const rect = item.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -12;
+      const rotateY = ((x - centerX) / centerX) * 12;
+      item.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+    });
+    item.addEventListener('mouseleave', () => {
+      item.style.transform = '';
+    });
+  }
+
+  function openModal(imageSrc) {
+    document.getElementById("imageModal").style.display = "flex";
+    document.getElementById("modalImg").src = imageSrc;
+  }
+
+  function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+  }
+
+  function renderPortfolioItems() {
+    const nextItems = portfolioData.slice(loadedItems, loadedItems + loadCount);
+    nextItems.forEach((item, index) => {
+      const portfolioItem = document.createElement('div');
+      portfolioItem.className = 'portfolio-item';
+      portfolioItem.style.animationDelay = `${index * 0.1}s`;
+
+      portfolioItem.innerHTML = `
+        <img src="${item.image}" alt="${item.title}" class="portfolio-image" />
+        <div class="portfolio-overlay">
+          <h3 class="portfolio-title">${item.title}</h3>
+          <p class="portfolio-category">${item.category.charAt(0).toUpperCase() + item.category.slice(1)} • ${item.year}</p>
+          <a class="portfolio-link" onclick="openModal('${item.image}')">View Image</a>
+        </div>
+      `;
+
+      apply3DEffect(portfolioItem);
+      grid.appendChild(portfolioItem);
+    });
+
+    loadedItems += nextItems.length;
+
+    if (loadedItems >= portfolioData.length) {
+      loadMoreBtn.style.display = 'none';
+    }
+  }
+
+  loadMoreBtn.addEventListener('click', () => {
+    loadingIndicator.style.display = 'block';
+    setTimeout(() => {
+      renderPortfolioItems();
+      loadingIndicator.style.display = 'none';
+    }, 800);
+  });
+
+  renderPortfolioItems();
+
+  // Navbar toggle
+  document.getElementById("navToggle").addEventListener("click", () => {
+    const menu = document.getElementById("mobileMenu");
+    menu.classList.toggle("hidden");
+  });
+</script>
+</body>
+</html>

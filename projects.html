@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects - Akanksha Sawant</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f2027;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+      filter: blur(2px);
+      opacity: 0.9;
+    }
+
+    /* Sidebar for Desktop */
+    .portfolio-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+    }
+
+    .sidebar {
+      background: rgba(255, 255, 255, 0.06);
+      width: 80px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-icons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      gap: 30px;
+    }
+
+    .sidebar .icon {
+      color: #ccc;
+      font-size: 20px;
+      padding: 12px;
+      border-radius: 10px;
+      transition: 0.3s ease;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .sidebar .icon:hover,
+    .sidebar .icon.active {
+      background-color: rgba(0, 240, 255, 0.1);
+      color: #00f0ff;
+      transform: scale(1.1);
+      box-shadow: 0 0 10px #00f0ff66;
+    }
+
+    .sidebar .icon::after {
+      content: attr(title);
+      position: absolute;
+      left: 60px;
+      background-color: #00f0ff;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      opacity: 0;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: 0.3s ease;
+      transform: translateY(-50%);
+      top: 50%;
+    }
+
+    .sidebar .icon:hover::after {
+      opacity: 1;
+    }
+
+    /* Top Nav for Mobile */
+    header {
+      display: none;
+      width: 100%;
+      padding: 15px 25px;
+      background: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-weight: bold;
+      color: #00f0ff;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: #00f0ff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    nav {
+      display: none;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.9);
+      position: absolute;
+      top: 60px;
+      right: 20px;
+      padding: 15px 25px;
+      border-radius: 10px;
+      text-align: right;
+    }
+
+    nav.active {
+      display: flex;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 0;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #00f0ff;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      header {
+        display: flex;
+      }
+      .content {
+        margin-left: 0;
+        padding-top: 80px;
+      }
+    }
+
+    .content {
+      margin-left: 100px;
+      padding: 50px 40px;
+      width: 100%;
+    }
+
+    .projects-section {
+      text-align: center;
+    }
+
+    .typewriter, .typewriter-sub {
+      font-size: 2.5rem;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .typewriter-sub {
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 2rem;
+      color: #cfcfcf;
+    }
+
+    .cursor {
+      display: inline-block;
+      margin-left: 2px;
+      color: #00f0ff;
+      animation: blink 0.8s steps(2, start) infinite;
+    }
+
+    @keyframes blink {
+      to { visibility: hidden; }
+    }
+
+    .projects-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-top: 2.5rem;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(14px);
+      color: #fff;
+      border-radius: 16px;
+      max-width: 300px;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+      position: relative;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 0 25px #00f0ff88, 0 0 40px #00f0ff44;
+      border: 1px solid #00f0ff66;
+      transform: translateY(-10px) scale(1.03);
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .project-content {
+      padding: 1rem;
+      text-align: left;
+    }
+
+    .project-title {
+      font-weight: 700;
+      font-size: 1.25rem;
+      margin: 0.5rem 0;
+    }
+
+    .project-desc {
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
+
+    .view-btn {
+      display: inline-block;
+      padding: 0.6rem 1.4rem;
+      background-color: #00f0ff;
+      color: #000;
+      font-weight: 600;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .view-btn:hover {
+      background-color: #00aabb;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="particles-js"></div>
+
+  <!-- Mobile Header -->
+  <header>
+    <div class="logo">Akanksha</div>
+    <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="skills.html">Skills</a>
+      <a href="education.html">Education</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="certificates.html">Certificates</a>
+      <a href="design.html">Designs</a>
+      <a href="contact2.html">Let's Connect</a>
+    </nav>
+  </header>
+
+  <div class="portfolio-wrapper">
+    <!-- Sidebar for Desktop -->
+    <div class="sidebar">
+      <div class="sidebar-icons">
+        <a href="index.html" class="icon" title="Home"><i class="fas fa-home"></i></a>
+        <a href="about.html" class="icon" title="About"><i class="fas fa-user"></i></a>
+        <a href="skills.html" class="icon" title="Skills"><i class="fas fa-laptop-code"></i></a>
+        <a href="education.html" class="icon" title="Education"><i class="fas fa-graduation-cap"></i></a>
+        <a href="projects.html" class="icon active" title="Projects"><i class="fas fa-briefcase"></i></a>
+        <a href="certificates.html" class="icon" title="Certificates"><i class="fas fa-certificate"></i></a>
+        <a href="design.html" class="icon" title="Designs"><i class="fas fa-pencil-ruler"></i></a>
+        <a href="contact2.html" class="icon" title="Let's Connect"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+      <section class="projects-section">
+        <h2 class="typewriter"><span id="typewriter-text"></span><span class="cursor">|</span></h2>
+        <p class="typewriter-sub"><span id="subtitle-text"></span><span class="cursor">|</span></p>
+
+        <div class="projects-grid">
+
+          <div class="project-card">
+            <img src="BlueShield-CRZ/Screenshot (246).png" alt="BlueShield-CRZ">
+            <div class="project-content">
+              <h3 class="project-title">BlueShield - CRZ</h3>
+              <p class="project-desc">An intelligent zone monitoring system securing Critical Restricted Zones using real-time AI alerts.</p>
+              <a href="moreaboutprojectBlue.html" class="view-btn">View Project</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <img src="NeuroBloom/Screenshot (307).png" alt="NeuroBloom">
+            <div class="project-content">
+              <h3 class="project-title">NeuroBloom</h3>
+              <p class="project-desc">A digital sanctuary merging neuroscience and design to enhance focus and mental well-being.</p>
+              <a href="moreaboutprojectneuro.html" class="view-btn">View Project</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <img src="Planora/Screenshot (347).png" alt="Planora">
+            <div class="project-content">
+              <h3 class="project-title">Planora</h3>
+              <p class="project-desc">A smart planner that manages conferences, ticketing, and schedules with ease.</p>
+              <a href="moreboutprojectplano.html" class="view-btn">View Project</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <img src="images/image.png" alt="Mahabharata">
+            <div class="project-content">
+              <h3 class="project-title">The Mahabharata</h3>
+              <p class="project-desc">A creative web experience showcasing timeless wisdom, epic tales, and values of the Mahabharata.</p>
+              <a href="moreaboutprojectmaha.html" class="view-btn">View Project</a>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <img src="roomframe.webp" alt="RoomFrame">
+            <div class="project-content">
+              <h3 class="project-title">RoomFrame</h3>
+              <p class="project-desc">A virtual interior layout editor featuring grid snap, AR support, and real-time object interaction.</p>
+              <a href="#" class="view-btn">Ongoing</a>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#00f0ff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5 },
+        size: { value: 3, random: true },
+        line_linked: {
+          enable: true, distance: 150, color: "#00f0ff", opacity: 0.4, width: 1
+        },
+        move: { enable: true, speed: 2, direction: "none", out_mode: "out" }
+      },
+      interactivity: {
+        events: { onhover: { enable: true, mode: "grab" }},
+        modes: { grab: { distance: 140, line_linked: { opacity: 0.5 }}}
+      },
+      retina_detect: true
+    });
+
+    // Typewriter Animation
+    const titleText = "Recent Projects 📁";
+    const subtitleText = "Projects I've Been Crafting – Real-world solutions through design, code, and creativity.🛠🎨 ";
+    let titleIndex = 0, subtitleIndex = 0;
+    const titleOut = document.getElementById("typewriter-text");
+    const subtitleOut = document.getElementById("subtitle-text");
+
+    function typeTitle() {
+      if (titleIndex < titleText.length) {
+        titleOut.textContent += titleText.charAt(titleIndex);
+        titleIndex++;
+        setTimeout(typeTitle, 80);
+      } else {
+        typeSubtitle();
+      }
+    }
+
+    function typeSubtitle() {
+      if (subtitleIndex < subtitleText.length) {
+        subtitleOut.textContent += subtitleText.charAt(subtitleIndex);
+        subtitleIndex++;
+        setTimeout(typeSubtitle, 40);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", typeTitle);
+
+    // Navbar Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      const icon = menuToggle.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+  </script>
+</body>
+</html>

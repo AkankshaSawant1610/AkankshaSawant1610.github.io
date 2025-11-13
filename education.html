@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio | Education Timeline</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #0a192f;
+      color: #ccd6f6;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      background: linear-gradient(to bottom, #1e40af, #3b82f6);
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .education-card {
+      background: linear-gradient(145deg, #0f172a, #1e293b);
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .education-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(30, 58, 138, 0.4);
+    }
+
+    .degree-icon {
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .glass-nav {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-glow {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: #22d3ee;
+      text-shadow: 0 0 10px #22d3ee, 0 0 20px #22d3ee, 0 0 40px #0ff;
+    }
+
+    .nav-link {
+      position: relative;
+      color: #94a3b8;
+      transition: all 0.3s ease;
+      padding-bottom: 4px;
+    }
+
+    .nav-link:hover {
+      color: #22d3ee;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: #22d3ee;
+      transition: width 0.4s ease-in-out;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-link-active {
+      color: #22d3ee;
+      font-weight: 600;
+    }
+
+    .nav-link-active::after {
+      width: 100%;
+    }
+
+    .fa-bars {
+      animation: glow-pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes glow-pulse {
+      0% { text-shadow: 0 0 5px #22d3ee; }
+      50% { text-shadow: 0 0 15px #22d3ee; }
+      100% { text-shadow: 0 0 5px #22d3ee; }
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(12px);
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        padding: 1rem 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .mobile-menu a {
+        color: #e0f2fe;
+        padding: 0.75rem 1rem;
+        text-align: center;
+        transition: background 0.3s;
+      }
+      .mobile-menu a:hover {
+        background: rgba(34, 211, 238, 0.1);
+      }
+      .mobile-menu.show {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- NAVBAR -->
+  <header class="fixed top-0 left-0 w-full z-50 glass-nav border-b border-cyan-500/20">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="logo-glow">Portfolio</h1>
+
+      <!-- Desktop Menu -->
+      <nav class="hidden md:flex gap-6 text-sm font-medium">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="skills.html" class="nav-link">Skills</a>
+        <a href="projects.html" class="nav-link">Projects</a>
+        <a href="education.html" class="nav-link nav-link-active">Education</a>
+        <a href="certificates.html" class="nav-link">Certification</a>
+        <a href="design.html" class="nav-link">Designs</a>
+        <a href="contact2.html" class="nav-link">Let's Connect</a>
+      </nav>
+
+      <!-- Mobile Menu Icon -->
+      <div class="md:hidden text-cyan-400 text-2xl cursor-pointer" id="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu md:hidden" id="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="skills.html">Skills</a>
+      <a href="projects.html">Projects</a>
+      <a href="education.html" class="text-cyan-400 font-semibold">Education</a>
+      <a href="certificates.html">Certification</a>
+      <a href="design.html">Designs</a>
+      <a href="contact2.html">Let's Connect</a>
+    </div>
+  </header>
+
+  <!-- MAIN SECTION -->
+  <main class="pt-24" id="education">
+    <section class="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-blue-900/50 to-transparent z-0"></div>
+
+      <div class="max-w-7xl mx-auto relative z-10">
+        <div class="text-center mb-16 scroll-reveal">
+          <span class="text-sm font-semibold tracking-wider text-blue-400 uppercase">Learning Journey</span>
+          <h2 class="mt-2 text-4xl md:text-5xl font-bold text-white">My <span class="text-blue-400">Education</span></h2>
+          <div class="mt-4 relative inline-block">
+            <div class="absolute -bottom-1 left-0 w-full h-1 bg-blue-500 rounded-full"></div>
+            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9f615331-eb42-4110-ba64-e5bbafa2a12a.png" alt="Graduation cap" class="inline-block mx-2" style="width: 40px; height: 40px;" />
+          </div>
+          <p class="mt-4 max-w-2xl mx-auto text-blue-100">Knowledge is power. These are the milestones that shaped my expertise.</p>
+        </div>
+
+        <!-- TIMELINE -->
+        <div class="relative timeline py-10">
+
+          <!-- ITEM 1 -->
+          <div class="mb-16 timeline-item flex flex-col md:flex-row items-center scroll-reveal">
+            <div class="w-full md:w-5/12 px-4 mb-10 md:mb-0">
+              <div class="education-card rounded-xl p-8 relative overflow-hidden">
+                <div class="degree-icon w-16 h-16 rounded-lg flex items-center justify-center text-white text-2xl mb-6">
+                  <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Master of Computer Application</h3>
+                <p class="text-blue-400 font-medium mb-2">JSPM's Rajarshi Shahu College Of Engineering</p>
+                <p class="text-blue-200 mb-2">2024 - 2026</p>
+                <p class="text-blue-100">Currently pursuing a Master’s in Computer Science with a focus on AI and Machine Learning, building strong skills in deep learning, research, and innovation.</p>
+               <br> <h4>Notable Achievements :</h4><br><ul><br>
+              <li>1. Participated in the ISRO Hackathon.</li>
+              <li>2. Created BlueShield CRZ, an AI-powered system for coastal zone monitoring.</li>
+              <li>3. Core member of the Tech Innovation Cell.</li>
+            </ul>
+            </div>
+            </div>
+            <div class="w-24 h-24 bg-blue-900/20 rounded-full border-4 border-blue-700/30 flex items-center justify-center z-10 mb-10 md:mb-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white text-xl font-bold">2026</div>
+            </div>
+            <div class="w-full md:w-5/12 px-4">
+              <img src="jspm.webp" />
+            </div>
+          </div>
+
+          <!-- ITEM 2 -->
+          <div class="mb-16 timeline-item flex flex-col md:flex-row-reverse items-center scroll-reveal">
+            <div class="w-full md:w-5/12 px-4 mb-10 md:mb-0">
+              <div class="education-card rounded-xl p-8 relative overflow-hidden">
+                <div class="degree-icon w-16 h-16 rounded-lg flex items-center justify-center text-white text-2xl mb-6">
+                   <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Bachelor of Science in Computer Science</h3>
+                <p class="text-blue-400 font-medium mb-2">Fergusson College, Pune</p>
+                <p class="text-blue-200 mb-2">2021 - 2024</p>
+                <p class="text-blue-100">Completed a Bachelor’s degree in Computer Science, building strong foundations in programming, algorithms, and software development, while actively participating in tech clubs and hackathons.</p>
+                            <br> <h4>Notable Achievements :</h4><br>
+            <ul>
+              <li>1. Team led at Cultural Event's</li>
+              <li>2. Developed campus PsycoSolution's app</li>
+              <li>3. Lead Speaker in intercollegiate debate competitions with top-tier performance.</li>
+            </ul>
+              </div>
+            </div>
+            <div class="w-24 h-24 bg-blue-900/20 rounded-full border-4 border-blue-700/30 flex items-center justify-center z-10 mb-10 md:mb-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white text-xl font-bold">2024</div>
+            </div>
+            <div class="w-full md:w-5/12 px-4">
+              <img src="fergusson.webp" />
+            </div>
+          </div>
+
+          <!-- ITEM 3 -->
+          <div class="timeline-item flex flex-col md:flex-row items-center scroll-reveal">
+            <div class="w-full md:w-5/12 px-4 mb-10 md:mb-0">
+              <div class="education-card rounded-xl p-8 relative overflow-hidden">
+                <div class="degree-icon w-16 h-16 rounded-lg flex items-center justify-center text-white text-2xl mb-6">
+                  <i class="fas fa-school"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Vidyamandir Highschool & Junior College, Islampur</h3>
+                <p class="text-blue-400 font-medium mb-2">HSC- Higher Secondary Education</p>
+                <p class="text-blue-200 mb-2">2019 - 2021</p>
+                <p class="text-blue-100">Completed HSC in Science from Vidyamandir Highschool & Junior College, Islampur, with a focus on Mathematics, Physics, and Computer Science. Actively participated in debates, academic competitions, and technical events.</p>
+                <br><h4>Notable Achievements</h4><br>
+            <ul>
+              <li>1. Scored 93.33% in Science stream .</li>
+              <li>2. Lead Speaker in intercollegiate debate competitions.</li>
+              <li>3. Represented college as a Hockey Player at zone-level events.</li>
+            </ul>
+              </div>
+            </div>
+            <div class="w-24 h-24 bg-blue-900/20 rounded-full border-4 border-blue-700/30 flex items-center justify-center z-10 mb-10 md:mb-0">
+              <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full flex items-center justify-center text-white text-xl font-bold">2021</div>
+            </div>
+            <div class="w-full md:w-5/12 px-4">
+              <img src="yccoll.webp" class="rounded-xl border-4 border-blue-900/20 shadow-xl" />
+            </div>
+          </div>
+        </div>
+
+        <!-- CURRENTLY LEARNING -->
+        <div class="mt-20 text-center scroll-reveal">
+          <div class="inline-flex items-center bg-blue-900/30 px-6 py-3 rounded-full border border-blue-700/30">
+            <i class="fas fa-book-open text-blue-400 mr-2"></i>
+            <span class="text-blue-300 font-medium">Currently studying:  Master of Computer Application</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-900/50 to-transparent z-0"></div>
+    </section>
+  </main>
+
+  <!-- SCROLL REVEAL SCRIPT -->
+  <script>
+    const scrollReveal = () => {
+      document.querySelectorAll('.scroll-reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.9) {
+          el.classList.add('visible');
+        }
+      });
+    };
+    window.addEventListener('scroll', scrollReveal);
+    window.addEventListener('load', scrollReveal);
+
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('show');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>   NeuroBloom</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body {
+      background: linear-gradient(-45deg, #1e293b, #0f172a, #111827, #1e1b4b);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      color: white;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      top: 0;
+      left: 0;
+    }
+
+    .typewriter {
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: break-word;
+      letter-spacing: 0.15em;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .typewriter span {
+      animation: glowText 0.6s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowText {
+      from { text-shadow: 0 0 6px rgba(255, 255, 255, 0.3); }
+      to { text-shadow: 0 0 12px rgba(255, 255, 255, 0.8); }
+    }
+
+    .card-inner {
+      box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2),
+                  inset 0 0 20px rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .slide {
+      transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+
+    .indicator {
+      transition: all 0.3s ease;
+    }
+
+    .indicator.active {
+      width: 24px;
+      background-color: white;
+    }
+  </style>
+</head>
+<body class="font-sans overflow-hidden">
+
+  <!-- Connected Mesh Background -->
+  <div id="particles-js"></div>
+
+  <!-- Title -->
+  <h1 class="absolute top-4 right-6 text-2xl lg:text-3xl font-bold text-indigo-300 drop-shadow-md z-20">NeuroBloom</h1>
+
+  <!-- Content -->
+  <div class="h-screen flex flex-col lg:flex-row items-center justify-center p-4 gap-8 overflow-hidden relative z-10">
+
+    <!-- Typing Card -->
+    <div class="w-full lg:w-1/2 flex justify-center">
+      <div class="card-inner bg-slate-800/40 rounded-2xl p-8 max-w-xl w-full h-[35rem] relative overflow-hidden border border-slate-700/50 flex flex-col">
+        <div class="absolute inset-0 rounded-2xl border-2 border-slate-700/30 pointer-events-none"></div>
+        <div class="flex-1 overflow-y-auto pr-2">
+          <h2 class="text-2xl font-bold mb-6 text-indigo-400 flex items-center">
+            <div class="w-3 h-3 rounded-full bg-indigo-500 mr-2"></div>
+            NeuroBloom
+          </h2>
+          <div id="typed-content" class="typewriter text-slate-200"></div>
+        </div>
+        <div class="mt-4 flex justify-center gap-4">
+          <button id="download-btn" class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded shadow-md ring-2 ring-indigo-400 ring-offset-2">🗂️ Download</button>
+          <button id="zip-btn" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded shadow-md ring-2 ring-pink-400 ring-offset-2">📦 Get Project Files</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Slider -->
+    <div class="w-full lg:w-1/2 max-w-2xl">
+      <div class="relative overflow-hidden rounded-2xl h-96 w-full">
+        <div class="relative h-full w-full">
+          <!-- Slides -->
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="0">
+            <img src="NeuroBloom/Screenshot (305).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Login Page</h3>
+              <p class="text-slate-300">This is the login page of my website</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900 opacity-0 pointer-events-none" data-index="1">
+            <img src="NeuroBloom/Screenshot (306).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Register Page</h3>
+              <p class="text-slate-300">This is the register page of my webite</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900 opacity-0 pointer-events-none" data-index="2">
+            <img src="NeuroBloom/Screenshot (307).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Home Page</h3>
+              <p class="text-slate-300">Introducing NeuroBloom</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900 opacity-0 pointer-events-none" data-index="3">
+            <img src="NeuroBloom/Screenshot (309).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">About us</h3>
+              <p class="text-slate-300">This is the about us page of my page</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="4">
+            <img src="NeuroBloom/Screenshot (310).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Assesments page</h3>
+              <p class="text-slate-300">These are the assesments that we provide .</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="5">
+            <img src="NeuroBloom/Screenshot (311).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Assesments page</h3>
+              <p class="text-slate-300">These are the assesments that we provide .</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="6">
+            <img src="NeuroBloom/Screenshot (312).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Assesments page</h3>
+              <p class="text-slate-300">Assesments Information</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="7">
+            <img src="NeuroBloom/Screenshot (313).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Assesments page</h3>
+              <p class="text-slate-300">Assesments Information</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="8">
+            <img src="NeuroBloom/Screenshot (314).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Assesments page</h3>
+              <p class="text-slate-300">Here the assesments score  can be seen </p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="9">
+            <img src="NeuroBloom/Screenshot (315).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Assesments page</h3>
+              <p class="text-slate-300">Here the assesments score  can be seen </p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="10">
+            <img src="NeuroBloom/Screenshot (319).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Blog Page </h3>
+              <p class="text-slate-300">here all the blogs can be explored</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="11">
+            <img src="NeuroBloom/Screenshot (308).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">More to explore</h3>
+              <p class="text-slate-300">More features about the system .</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="12">
+            <img src="NeuroBloom/Screenshot (320).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Relaxation Logs</h3>
+              <p class="text-slate-300">Here user can explore relaxation logs..</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="13">
+            <img src="NeuroBloom/Screenshot (321).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Relaxation Logs</h3>
+              <p class="text-slate-300">Here user can explore relaxation logs..</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="14">
+            <img src="NeuroBloom/Screenshot (322).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Games</h3>
+              <p class="text-slate-300">Games of our system</p>
+            </div>
+          </div>
+          <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="15">
+            <img src="NeuroBloom/Screenshot (323).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Games</h3>
+              <p class="text-slate-300">Games of our system</p>
+            </div>
+          </div>
+            <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="16">
+            <img src="NeuroBloom/Screenshot (324).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Games</h3>
+              <p class="text-slate-300">Games of our system</p>
+            </div>
+          </div>
+            <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="17">
+            <img src="NeuroBloom/Screenshot (325).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Games</h3>
+              <p class="text-slate-300">Games of our system</p>
+            </div>
+          </div>
+            <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="18">
+            <img src="NeuroBloom/Screenshot (326).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Games</h3>
+              <p class="text-slate-300">Games of our system</p>
+            </div>
+          </div>
+           <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="19">
+            <img src="NeuroBloom/Screenshot (327).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Games</h3>
+              <p class="text-slate-300">Games of our system</p>
+            </div>
+          </div>
+           <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="20">
+            <img src="NeuroBloom/Screenshot (328).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Contact Us</h3>
+              <p class="text-slate-300">This is the contact us page for my system.</p>
+            </div>
+          </div>
+           <div class="slide absolute inset-0 flex items-center justify-center bg-gray-900" data-index="21">
+            <img src="NeuroBloom/Screenshot (329).png" class="w-full h-full object-cover opacity-90" />
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 pt-12">
+              <h3 class="text-xl font-bold text-white">Logout Page</h3>
+              <p class="text-slate-300">This is the logout page for my website .</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Arrows -->
+        <button id="prev-slide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all z-10"><i class="fas fa-chevron-left"></i></button>
+        <button id="next-slide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white w-10 h-10 rounded-full flex items-center justify-center transition-all z-10"><i class="fas fa-chevron-right"></i></button>
+
+        <!-- Indicators -->
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer active" data-index="0"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="1"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="2"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="3"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="4"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="5"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="6"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="7"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="8"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="9"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="10"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="11"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="12"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="13"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="14"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="15"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="16"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="17"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="18"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="19"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="20"></div>
+          <div class="indicator w-2 h-2 bg-white/50 rounded-full cursor-pointer" data-index="21"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Connected Mesh Animation
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#ffffff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.4, random: false },
+        size: { value: 3, random: true },
+        line_linked: {
+          enable: true,
+          distance: 120,
+          color: "#ffffff",
+          opacity: 0.3,
+          width: 1
+        },
+        move: {
+          enable: true,
+          speed: 1.2,
+          direction: "none",
+          random: false,
+          straight: false,
+          bounce: true
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "grab" },
+          onclick: { enable: false }
+        },
+        modes: {
+          grab: { distance: 140, line_linked: { opacity: 0.5 } }
+        }
+      },
+      retina_detect: true
+    });
+
+    // Typewriter
+    const typedContent = document.getElementById('typed-content');
+    const textToType = ` About NeuroBloom 💡🧠
+
+Empowering Minds, One Step at a Time
+
+Welcome to NeuroBloom💡🧠 – your digital sanctuary for mental wellness, emotional clarity, and cognitive growth. In today’s fast-paced world, we believe that caring for your mind is not a luxury — it’s a necessity. NeuroBloom is here to help you slow down, reflect, and bloom at your own pace.
+
+Our mission 💬
+   To make mental health support accessible, engaging, and stigma-free. Whether you're navigating stress, anxiety, self-doubt, or simply seeking mental enrichment — NeuroBloom supports your personal journey with compassion and insight.
+
+
+
+ 🧠 What We Offer
+
+🧪 Self-Guided Mental Health Assessments
+  Understand your emotional state with clinically informed tools that assess stress levels, burnout, anxiety, mood patterns, and more.
+
+💡 Personalized Insights & Coping Strategies
+  Based on your assessments, receive expert-guided suggestions, wellness tips, and habit trackers tailored to your individual needs.
+
+🧘 Relaxation & Mindfulness Zone
+  Breathe easy with our library of guided meditations, breathing exercises, calming sounds, and reflective journaling prompts.
+
+📊 Emotional Awareness Tools
+  Explore interactive mood check-ins, emotional labeling tools, and journaling prompts to help you understand what you're feeling — and why.
+
+🧩 Brain Boost Puzzles & Cognitive Games
+  Sharpen your focus and lift your mood with our curated collection of fun and stimulating puzzles. From memory games and riddles to logic challenges and pattern recognition — NeuroBloom’s puzzle corner is designed to engage your brain and bring a smile to your day.
+
+🔒 Safe, Private, and Confidential
+  Your mental health journey is personal — and we treat it with the respect and privacy it deserves. All data is secure and handled with care.
+
+
+
+ 🌱 Why NeuroBloom?
+
+Because mental wellness is more than just therapy. It’s about daily emotional hygiene, mental stimulation, self-expression, and continuous learning. At NeuroBloom, we combine science with empathy, structure with creativity, and care with technology — to give you a truly holistic experience.
+
+
+
+🌟 Our Vision
+
+To create a world where mental well-being is celebrated, not hidden. Where reflection, emotional intelligence, and brain care become part of everyday life — not just moments of crisis.
+
+
+
+🔗 Let’s Grow, Heal & Think Together
+
+Whether you’re a student, a working professional, or simply someone on a journey toward better mental clarity — NeuroBloom is your space to grow, heal, and thrive. Explore, reflect, play, and take the next step in your mental wellness journey.
+
+
+
+`;
+    let i = 0;
+    const typingSpeed = 30;
+    function typeWriter() {
+      if (i < textToType.length) {
+        const span = document.createElement('span');
+        span.textContent = textToType.charAt(i);
+        typedContent.appendChild(span);
+        i++;
+        setTimeout(typeWriter, typingSpeed);
+        typedContent.scrollTop = typedContent.scrollHeight;
+      }
+    }
+    setTimeout(typeWriter, 1000);
+
+    // Slider
+    const slides = document.querySelectorAll('.slide');
+    const indicators = document.querySelectorAll('.indicator');
+    const prevBtn = document.getElementById('prev-slide');
+    const nextBtn = document.getElementById('next-slide');
+    let currentSlide = 0;
+    const slideCount = slides.length;
+    let autoSlideInterval;
+
+    function updateSlider() {
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('opacity-0', index !== currentSlide);
+        slide.classList.toggle('opacity-100', index === currentSlide);
+        slide.style.pointerEvents = index === currentSlide ? 'auto' : 'none';
+      });
+      indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === currentSlide);
+      });
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slideCount;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+      updateSlider();
+      resetAutoSlide();
+    }
+
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(nextSlide, 3000);
+    }
+
+    function resetAutoSlide() {
+      clearInterval(autoSlideInterval);
+      startAutoSlide();
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+    indicators.forEach(indicator => {
+      indicator.addEventListener('click', () => {
+        goToSlide(parseInt(indicator.dataset.index));
+      });
+    });
+
+    updateSlider();
+    startAutoSlide();
+
+    const sliderContainer = document.querySelector('.relative');
+    sliderContainer.addEventListener('mouseenter', () => clearInterval(autoSlideInterval));
+    sliderContainer.addEventListener('mouseleave', () => startAutoSlide());
+
+    document.getElementById('download-btn').addEventListener('click', () => {
+      const blob = new Blob([textToType], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'NeuroBloom.txt';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    });
+
+    document.getElementById('zip-btn').addEventListener('click', () => {
+      const zip = new JSZip();
+      zip.file("story.txt", textToType);
+      zip.generateAsync({ type: "blob" }).then(content => {
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(content);
+        link.download = "neurobloom.zip";
+        link.click();
+        URL.revokeObjectURL(link.href);
+      });
+    });
+  </script>
+</body>
+</html>

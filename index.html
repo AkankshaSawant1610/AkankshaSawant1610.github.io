@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio - Akanksha Sawant</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f2027;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: -1;
+    }
+
+    .portfolio-wrapper {
+      max-width: 1100px;
+      margin: 50px auto;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      display: flex;
+      overflow: hidden;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+
+    .sidebar {
+      background: rgba(255, 255, 255, 0.06);
+      width: 100px;
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 2;
+    }
+
+    .sidebar-icons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .sidebar .icon {
+      color: #ccc;
+      font-size: 20px;
+      padding: 12px;
+      border-radius: 10px;
+      transition: 0.3s ease;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .sidebar .icon:hover,
+    .sidebar .icon.active {
+      background-color: rgba(0, 240, 255, 0.15);
+      color: #00f0ff;
+      transform: scale(1.1);
+      box-shadow: 0 0 12px #00f0ff88;
+    }
+
+    .sidebar .icon::after {
+      content: attr(title);
+      position: absolute;
+      left: 70px;
+      background-color: #00f0ff;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      opacity: 0;
+      white-space: nowrap;
+      pointer-events: none;
+      transition: 0.3s ease;
+      transform: translateY(-50%);
+      top: 50%;
+    }
+
+    .sidebar .icon:hover::after { opacity: 1; }
+
+    .content {
+      margin-left: 100px;
+      padding: 40px 50px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* ---------- NAVIGATION ---------- */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .nav-left h2 {
+      color: #fff;
+      font-size: 24px;
+    }
+
+    .nav-left h2 span {
+      color: #00f0ff;
+      text-shadow: 0 0 8px #00f0ff88;
+    }
+
+    .nav-right ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .nav-right ul li a {
+      color: inherit;
+      text-decoration: none;
+      position: relative;
+    }
+
+    .nav-right ul li a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -3px;
+      left: 0;
+      background: #00f0ff;
+      transition: width 0.3s;
+    }
+
+    .nav-right ul li:hover a::after {
+      width: 100%;
+    }
+
+    /* Hamburger Icon */
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: #00f0ff;
+      cursor: pointer;
+      background: none;
+      border: none;
+      z-index: 20;
+    }
+
+    /* ---------- HERO SECTION ---------- */
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-text { max-width: 550px; }
+
+    .hero-text p.name {
+      font-size: 30px;
+      font-weight: bold;
+      color: #ffffff;
+      text-shadow: 0 0 12px #00f0ff;
+      margin-bottom: 6px;
+      background: linear-gradient(to right, #00f0ff, #8efcff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-text p.quick-bio {
+      font-size: 16px;
+      color: #8efcff;
+      font-style: italic;
+      margin-bottom: 10px;
+      animation: fadeIn 1s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-text h1 {
+      font-size: 38px;
+      margin: 10px 0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-text h1 span#typingText {
+      color: #00f0ff;
+      font-weight: bold;
+      border-right: 2px solid #00f0ff;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .hero-text p.description {
+      color: #cfcfcf;
+      margin: 10px 0 20px;
+      font-size: 16px;
+    }
+
+    .hero-text .btns {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .hero-text button,
+    .hero-text .resume-btn {
+      padding: 12px 28px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s ease;
+      text-decoration: none;
+    }
+
+    .hero-text button {
+      background: #00f0ff;
+      color: black;
+      border: none;
+    }
+
+    .hero-text button:hover { background: #00aabb; }
+
+    .hero-text .resume-btn {
+      background: transparent;
+      border: 2px solid #00f0ff;
+      color: #00f0ff;
+    }
+
+    .hero-text .resume-btn:hover {
+      background: #00f0ff;
+      color: black;
+      box-shadow: 0 0 10px #00f0ff88;
+    }
+
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-image img {
+      max-height: 400px;
+      max-width: 100%;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .hero-image img:hover { transform: scale(1.03); }
+
+    .designer-label {
+      position: absolute;
+      top: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      font-size: 6rem;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.05);
+      z-index: 0;
+      letter-spacing: 10px;
+      user-select: none;
+      opacity: 0;
+      animation: popUp 1s ease-out 1s forwards;
+      text-shadow: 0 0 15px #00f0ff22;
+    }
+
+    @keyframes popUp {
+      from { transform: translateX(-50%) translateY(100px); opacity: 0; }
+      to { transform: translateX(-50%) translateY(0); opacity: 1; }
+    }
+
+    .availability-status {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 240, 255, 0.1);
+      color: #00f0ff;
+      border: 1px solid #00f0ff;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .availability-status .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 8px;
+      background-color: #00ff9d;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.5); }
+      70% { box-shadow: 0 0 0 8px rgba(0, 255, 157, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0); }
+    }
+
+    /* ---------- RESPONSIVE NAV ---------- */
+    @media (max-width: 950px) {
+      .hero { flex-direction: column; text-align: center; }
+      .designer-label { font-size: 3rem; top: 90px; }
+      .hero-image { margin-top: 20px; }
+      .hero-image img { max-height: 280px; }
+      .sidebar { display: none; }
+      .content { margin-left: 0; }
+
+      .menu-toggle { display: block; }
+
+      .nav-right {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 220px;
+        background: rgba(0, 0, 0, 0.9);
+        border-radius: 15px;
+        padding: 15px 0;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(8px);
+        z-index: 9999;
+      }
+
+      .nav-right.active { display: block; }
+
+      .nav-right ul {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+
+      .nav-right ul li a {
+        color: #00f0ff;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+
+  <div class="portfolio-wrapper">
+    <div class="sidebar">
+      <div class="sidebar-icons">
+        <a href="index.html" class="icon active" title="Home"><i class="fas fa-home"></i></a>
+        <a href="about.html" class="icon" title="About"><i class="fas fa-user"></i></a>
+        <a href="skills.html" class="icon" title="Skills"><i class="fas fa-laptop-code"></i></a>
+        <a href="certificates.html" class="icon" title="Certificates"><i class="fas fa-award"></i></a>
+        <a href="education.html" class="icon" title="Education"><i class="fas fa-graduation-cap"></i></a>
+        <a href="projects.html" class="icon" title="Projects"><i class="fas fa-briefcase"></i></a>
+        <a href="contact2.html" class="icon" title="Lets Connect"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="navbar">
+        <div class="nav-left"><h2>Port<span>folio.</span></h2></div>
+        <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+        <div class="nav-right">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="skills.html">Skills</a></li>
+            <li><a href="certificates.html">Certificates</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="design.html">Designs</a></li>
+            <li><a href="education.html">Education</a></li>
+            <li><a href="contact2.html">Lets Connect</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="designer-label">DEVELOPER</div>
+
+      <div class="hero" id="home">
+        <div class="hero-text">
+          <p class="name">AKANKSHA SAWANT</p>
+          <p class="quick-bio">💡 Passionate about clean code, UI detail, and solving real problems.</p>
+          <h1>I'm <span id="typingText"></span></h1>
+          <p class="description">A Software Developer and UI/UX Designer with a strong focus on creating clean, responsive, and user-centric softwares.</p>
+          <div class="btns">
+            <button onclick="window.location.href='about.html'">Know More</button>
+            <a href="#" class="resume-btn" download>Download Resume</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="images/akki.png" alt="Your Photo">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="availability-status">
+    <span class="dot"></span> Available for freelance
+  </div>
+
+  <script>
+    // Typing Effect
+    const roles = ["Web & UI Designer", "Frontend Developer", "UX Designer", "Software Developer"];
+    let currentRole = 0, charIndex = 0, isDeleting = false;
+    const typingElement = document.getElementById("typingText");
+
+    function typeEffect() {
+      const currentText = roles[currentRole];
+      typingElement.textContent = isDeleting
+        ? currentText.substring(0, charIndex--)
+        : currentText.substring(0, charIndex++);
+
+      if (!isDeleting && charIndex === currentText.length + 1) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1000);
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        currentRole = (currentRole + 1) % roles.length;
+        setTimeout(typeEffect, 300);
+      } else {
+        setTimeout(typeEffect, isDeleting ? 50 : 100);
+      }
+    }
+    document.addEventListener("DOMContentLoaded", typeEffect);
+
+    // Mobile Nav Toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navRight = document.querySelector('.nav-right');
+    menuToggle.addEventListener('click', () => {
+      navRight.classList.toggle('active');
+      menuToggle.querySelector('i').classList.toggle('fa-bars');
+      menuToggle.querySelector('i').classList.toggle('fa-times');
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 80, density: { enable: true, value_area: 800 } },
+        color: { value: "#00f0ff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.5 },
+        size: { value: 3, random: true },
+        line_linked: {
+          enable: true, distance: 150, color: "#00f0ff", opacity: 0.4, width: 1
+        },
+        move: { enable: true, speed: 2, direction: "none", out_mode: "out" }
+      },
+      interactivity: {
+        events: { onhover: { enable: true, mode: "grab" }},
+        modes: { grab: { distance: 140, line_linked: { opacity: 0.5 }}}
+      },
+      retina_detect: true
+    });
+  </script>
+</body>
+</html>

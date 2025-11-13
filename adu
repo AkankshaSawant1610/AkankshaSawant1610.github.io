@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Educational Journey</title>
+    <style>
+        :root {
+            --deep-blue: #0a192f;
+            --bright-blue: #64ffda;
+            --light-blue: #ccd6f6;
+            --navy: #112240;
+            --slate: #8892b0;
+            --gray: #e6f1ff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Calibre', 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--deep-blue);
+            color: var(--light-blue);
+            overflow-x: hidden;
+        }
+
+        .education-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--bright-blue);
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: titleUnderline 1s ease forwards 0.5s;
+        }
+
+        @keyframes titleUnderline {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 50px auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            background: var(--slate);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            margin-bottom: 60px;
+            perspective: 1000px;
+        }
+
+        .timeline-container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: var(--deep-blue);
+            border: 3px solid var(--bright-blue);
+            top: 30px;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .right::after {
+            left: -12px;
+        }
+
+        .education-card {
+            padding: 30px;
+            background-color: var(--navy);
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            border: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .education-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.4);
+        }
+
+        .education-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1) 0%, transparent 100%);
+            border-radius: 8px;
+            z-index: -1;
+        }
+
+        .education-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .education-logo img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--bright-blue);
+        }
+
+        .institution {
+            font-size: 1.5rem;
+            color: var(--gray);
+            margin-bottom: 5px;
+        }
+
+        .degree {
+            font-size: 1.1rem;
+            color: var(--bright-blue);
+            margin-bottom: 10px;
+        }
+
+        .duration {
+            font-size: 0.9rem;
+            color: var(--slate);
+        }
+
+        .education-details {
+            margin-top: 20px;
+        }
+
+        .achievements {
+            margin-top: 15px;
+        }
+
+        .achievements h4 {
+            color: var(--bright-blue);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .achievements ul {
+            list-style-position: inside;
+            padding-left: 5px;
+        }
+
+        .achievements li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: var(--slate);
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .achievements li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--bright-blue);
+        }
+
+        .skills-container {
+            margin-top: 15px;
+        }
+
+        .skills-container h4 {
+            color: var(--bright-blue);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill {
+            background-color: rgba(100, 255, 218, 0.1);
+            color: var(--bright-blue);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .academic-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background-color: var(--bright-blue);
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
+        .book-icon {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-size: 24px;
+            color: var(--bright-blue);
+            opacity: 0.3;
+        }
+
+        @media screen and (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-container::after {
+                left: 18px;
+            }
+
+            .left::after, .right::after {
+                left: 18px;
+            }
+
+            .right {
+                left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="education-section">
+        <h2 class="section-title">My Educational Journey</h2>
+        
+        <div class="academic-stars" id="stars"></div>
+
+        <div class="timeline">
+            <!-- Example Education Item 1 -->
+            <div class="timeline-container left">
+                <div class="education-card">
+                    <div class="education-header">
+                        <div>
+                            <h3 class="institution">Stanford University</h3>
+                            <p class="degree">Master of Computer Science</p>
+                            <p class="duration">2020 - 2022</p>
+                        </div>
+                        <div class="education-logo">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/20e2bfb3-4bdc-454b-b7d4-36a9b2b3a3c4.png" alt="Stanford University's Main Quadrangle with its distinctive Romanesque architecture and sandstone buildings" />
+                        </div>
+                    </div>
+                    <div class="education-details">
+                        <p>Specialized in Artificial Intelligence and Machine Learning with a focus on neural networks and deep learning applications.</p>
+                    </div>
+                    <div class="achievements">
+                        <h4>Notable Achievements</h4>
+                        <ul>
+                            <li>Published research on generative adversarial networks in IEEE Journal</li>
+                            <li>Recipient of the Graduate Student Research Fellowship</li>
+                            <li>Led AI research team to win Stanford Hackathon</li>
+                        </ul>
+                    </div>
+                    <div class="skills-container">
+                        <h4>Key Skills Acquired</h4>
+                        <div class="skills">
+                            <span class="skill">Deep Learning</span>
+                            <span class="skill">TensorFlow</span>
+                            <span class="skill">PyTorch</span>
+                            <span class="skill">Research</span>
+                            <span class="skill">Data Science</span>
+                        </div>
+                    </div>
+                    <div class="book-icon">📚</div>
+                </div>
+            </div>
+
+            <!-- Example Education Item 2 -->
+            <div class="timeline-container right">
+                <div class="education-card">
+                    <div class="education-header">
+                        <div>
+                            <h3 class="institution">MIT</h3>
+                            <p class="degree">Bachelor of Science in Computer Science</p>
+                            <p class="duration">2016 - 2020</p>
+                        </div>
+                        <div class="education-logo">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/972ccbcc-e23c-4ee3-b131-da4471425b4c.png" alt="MIT's Great Dome building with its iconic classical architecture" />
+                        </div>
+                    </div>
+                    <div class="education-details">
+                        <p>Focused on software engineering fundamentals with electives in human-computer interaction and data structures.</p>
+                    </div>
+                    <div class="achievements">
+                        <h4>Notable Achievements</h4>
+                        <ul>
+                            <li>Summa Cum Laude graduate (Top 2% of class)</li>
+                            <li>Developed campus navigation app used by 3000+ students</li>
+                            <li>Teaching assistant for Algorithms course</li>
+                        </ul>
+                    </div>
+                    <div class="skills-container">
+                        <h4>Key Skills Acquired</h4>
+                        <div class="skills">
+                            <span class="skill">Algorithms</span>
+                            <span class="skill">Data Structures</span>
+                            <span class="skill">React</span>
+                            <span class="skill">Java</span>
+                            <span class="skill">UI/UX</span>
+                        </div>
+                    </div>
+                    <div class="book-icon">📚</div>
+                </div>
+            </div>
+
+            <!-- Example Education Item 3 -->
+            <div class="timeline-container left">
+                <div class="education-card">
+                    <div class="education-header">
+                        <div>
+                            <h3 class="institution">International High School</h3>
+                            <p class="degree">International Baccalaureate (IB)</p>
+                            <p class="duration">2012 - 2016</p>
+                        </div>
+                        <div class="education-logo">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/07edf614-48bc-4356-a107-3214eaf168d1.png" alt="Modern high school building with glass facade and collaborative learning spaces" />
+                        </div>
+                    </div>
+                    <div class="education-details">
+                        <p>Completed the rigorous IB Diploma Program with Higher Level subjects in Mathematics, Physics, and Computer Science.</p>
+                    </div>
+                    <div class="achievements">
+                        <h4>Notable Achievements</h4>
+                        <ul>
+                            <li>46/45 IB points (perfect score with bonus points)</li>
+                            <li>Founded first coding club with 50+ members</li>
+                            <li>Won regional programming competitions</li>
+                        </ul>
+                    </div>
+                    <div class="skills-container">
+                        <h4>Key Skills Acquired</h4>
+                        <div class="skills">
+                            <span class="skill">Mathematics</span>
+                            <span class="skill">Physics</span>
+                            <span class="skill">Problem Solving</span>
+                            <span class="skill">Python</span>
+                        </div>
+                    </div>
+                    <div class="book-icon">📚</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create twinkling stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 30;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random position
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                // Random size
+                const size = Math.random() * 3;
+                
+                // Random animation delay
+                const delay = Math.random() * 5;
+                
+                star.style.left = `${posX}%`;
+                star.style.top = `${posY}%`;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.animationDelay = `${delay}s`;
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Card hover effects
+        function setupCardEffects() {
+            const cards = document.querySelectorAll('.education-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const angleX = (y - centerY) / 20;
+                    const angleY = (centerX - x) / 20;
+                    
+                    card.style.transform = `translateY(-10px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = '';
+                });
+            });
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            setupCardEffects();
+        });
+    </script>
+</body>
+</html>
+
+ About NeuroBloom 💡🧠
+
+Empowering Minds, One Step at a Time
+
+Welcome to NeuroBloom💡🧠 – your digital sanctuary for mental wellness, emotional clarity, and cognitive growth. In today’s fast-paced world, we believe that caring for your mind is not a luxury — it’s a necessity. NeuroBloom is here to help you slow down, reflect, and bloom at your own pace.
+
+Our mission 💬
+   To make mental health support accessible, engaging, and stigma-free. Whether you're navigating stress, anxiety, self-doubt, or simply seeking mental enrichment — NeuroBloom supports your personal journey with compassion and insight.
+
+
+
+ 🧠 What We Offer
+
+🧪 Self-Guided Mental Health Assessments
+  Understand your emotional state with clinically informed tools that assess stress levels, burnout, anxiety, mood patterns, and more.
+
+💡 Personalized Insights & Coping Strategies
+  Based on your assessments, receive expert-guided suggestions, wellness tips, and habit trackers tailored to your individual needs.
+
+🧘 Relaxation & Mindfulness Zone
+  Breathe easy with our library of guided meditations, breathing exercises, calming sounds, and reflective journaling prompts.
+
+📊 Emotional Awareness Tools
+  Explore interactive mood check-ins, emotional labeling tools, and journaling prompts to help you understand what you're feeling — and why.
+
+🧩 Brain Boost Puzzles & Cognitive Games
+  Sharpen your focus and lift your mood with our curated collection of fun and stimulating puzzles. From memory games and riddles to logic challenges and pattern recognition — NeuroBloom’s puzzle corner is designed to engage your brain and bring a smile to your day.
+
+🔒 Safe, Private, and Confidential
+  Your mental health journey is personal — and we treat it with the respect and privacy it deserves. All data is secure and handled with care.
+
+
+
+ 🌱 Why NeuroBloom?
+
+Because mental wellness is more than just therapy. It’s about daily emotional hygiene, mental stimulation, self-expression, and continuous learning. At NeuroBloom, we combine science with empathy, structure with creativity, and care with technology — to give you a truly holistic experience.
+
+
+
+🌟 Our Vision
+
+To create a world where mental well-being is celebrated, not hidden. Where reflection, emotional intelligence, and brain care become part of everyday life — not just moments of crisis.
+
+
+
+🔗 Let’s Grow, Heal & Think Together
+
+Whether you’re a student, a working professional, or simply someone on a journey toward better mental clarity — NeuroBloom is your space to grow, heal, and thrive. Explore, reflect, play, and take the next step in your mental wellness journey.
+
+
+`

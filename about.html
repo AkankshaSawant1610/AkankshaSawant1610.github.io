@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Akanksha Sawant | Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --neon: #00fff7;
+      --text: #f1f1f1;
+      --dim: #aaa;
+      --bg-dark: #0f0f0f;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100vw;
+      height: 100vh;
+      background: var(--bg-dark);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: auto;
+      padding: 50px 20px;
+      padding-top: 130px;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      background: rgba(15, 15, 15, 0.7);
+      backdrop-filter: blur(12px);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .logo span {
+      color: var(--neon);
+    }
+
+    /* NAVIGATION */
+    nav {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 10px 25px;
+      border-radius: 50px;
+      box-shadow: 0 0 10px rgba(0, 255, 247, 0.1);
+      transition: background 0.3s ease;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dim);
+      font-weight: 500;
+      position: relative;
+      padding: 8px 14px;
+      transition: 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--neon);
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--neon);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.4s ease;
+    }
+
+    nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* HAMBURGER ICON */
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      color: var(--neon);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: flex-start;
+    }
+
+    .intro {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .intro h1,
+    .intro h2,
+    .intro .btn {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s forwards;
+    }
+
+    .intro h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation-delay: 0.2s;
+    }
+
+    .intro h2 {
+      font-size: 1.5rem;
+      color: var(--neon);
+      margin-bottom: 15px;
+      animation-delay: 0.4s;
+    }
+
+    #typingText {
+      color: var(--dim);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      min-height: 60px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 24px;
+      border: 2px solid var(--neon);
+      color: var(--neon);
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s ease;
+      animation-delay: 0.8s;
+    }
+
+    .btn:hover {
+      background: var(--neon);
+      color: #000;
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .media-cards {
+      flex: 1.5;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-areas:
+        "top-left main"
+        "bottom-left profile";
+      gap: 20px;
+      position: relative;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 12px rgba(0, 255, 247, 0.12);
+      position: relative;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .card-main {
+      grid-area: main;
+      position: relative;
+    }
+
+    .overlay-text {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    }
+
+    .typewriter-text,
+    .typewriter-subtext {
+      display: inline-block;
+      overflow: hidden;
+      border-right: 2px solid var(--neon);
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    .typewriter-text {
+      font-size: 1.2rem;
+      color: var(--text);
+      animation: typing 4s steps(40, end) forwards, blink 0.75s step-end infinite;
+    }
+
+    .typewriter-subtext {
+      font-size: 0.95rem;
+      color: #bbb;
+      border-color: #bbb;
+      animation: typing-sub 5s steps(60, end) 4.2s forwards, blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes typing-sub { from { width: 0; } to { width: 100%; } }
+    @keyframes blink { 50% { border-color: transparent; } }
+
+    .card-profile {
+      grid-area: profile;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .card-profile img {
+      border-radius: 50%;
+      width: 90px;
+      height: 90px;
+      margin-bottom: 12px;
+    }
+
+    .card-profile h4 { margin: 6px 0; color: white; }
+    .card-profile span { font-size: 0.9rem; color: var(--neon); }
+    .card-profile p { font-size: 0.85rem; color: #ccc; margin: 10px 0; min-height: 60px; }
+
+    .btn.mini {
+      font-size: 0.8rem;
+      padding: 6px 16px;
+      margin-top: 8px;
+      border: none;
+      background: var(--neon);
+      color: #000;
+    }
+
+    /* MOBILE RESPONSIVE DESIGN */
+    @media (max-width: 900px) {
+      .hero {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .media-cards {
+        grid-template-areas:
+          "main main"
+          "top-left bottom-left"
+          "profile profile";
+        grid-template-columns: 1fr 1fr;
+      }
+
+      header {
+        padding: 12px 20px;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 15px;
+        width: 200px;
+        text-align: center;
+        padding: 15px 0;
+      }
+
+      nav.active {
+        display: block;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      nav a {
+        color: var(--text);
+        font-size: 1rem;
+      }
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 247, 0.1);
+      animation: fadeUp 1s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="container">
+    <header>
+      <div class="logo">About<span>Me..</span></div>
+      <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="skills.html">Skills</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="design.html">Designs</a></li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="certificates.html">Certificates</a></li>
+          <li><a href="contact2.html">Lets Connect</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="intro glass-card">
+        <h1>Hi, I'm Akanksha</h1>
+        <h2>Software Developer , UI/UX  & Multimedia Designer...</h2>
+        <p id="typingText"></p>
+        <a href="projects.html" class="btn">View My Work</a>
+      </div>
+
+      <div class="media-cards">
+        <div class="card card-small top-left">
+          <img src="usercc.png" alt="UX" />
+          <div class="caption">Good at Developing User-centered designs...</div>
+        </div>
+
+        <div class="card card-main">
+          <img src="passion.jpg" alt="Main Visual" />
+          <div class="overlay-text">
+            <div class="typewriter-text">Dive into my world!</div><br>
+            <div class="typewriter-subtext">Telling stories visually.</div>
+          </div>
+        </div>
+
+        <div class="card card-profile">
+          <img src="a2.png" alt="Akanksha" />
+          <h4>Akanksha Sawant</h4>
+          <span>UI/UX DESIGNER & SOFTWARE DEVELOPER</span>
+          <p id="typeLoopText"></p>
+          <a href="contact2.html" class="btn mini"><i class="fas fa-comment"></i> Let’s start a project together!</a>
+        </div>
+
+        <div class="card card-small bottom-left">
+          <img src="aisthet.webp" alt="Dog Lover" />
+          <div class="caption">
+            <strong>LOVE Being Aesthete..</strong><br />
+            Multidisciplinary Designer<br/>
+            Graphic, Web, UX, UI, Animations etc.
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Typing text animations
+    const message = "I’m passionate about creating beautiful and functional digital experiences. Explore my portfolio and let’s build something impactful together.";
+    const typingText = document.getElementById("typingText");
+    let j = 0;
+    function typeEffect() {
+      if (j < message.length) {
+        typingText.innerHTML += message.charAt(j);
+        j++;
+        setTimeout(typeEffect, 50);
+      } else {
+        setTimeout(() => {
+          typingText.innerHTML = "";
+          j = 0;
+          typeEffect();
+        }, 3000);
+      }
+    }
+    typeEffect();
+
+    const loopText = "Living and developing in India. Currently working on major projects, hoping to further my career in the design and developing space.";
+    const el = document.getElementById("typeLoopText");
+    let i = 0;
+    function typeLoop() {
+      if (i < loopText.length) {
+        el.innerHTML += loopText.charAt(i);
+        i++;
+        setTimeout(typeLoop, 50);
+      } else {
+        setTimeout(() => {
+          el.innerHTML = "";
+          i = 0;
+          typeLoop();
+        }, 3000);
+      }
+    }
+    typeLoop();
+
+    // Background animation
+    const canvas = document.getElementById("bgCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const points = [];
+    for (let i = 0; i < 100; i++) {
+      points.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.8,
+        vy: (Math.random() - 0.5) * 0.8
+      });
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < points.length; i++) {
+        let p = points[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        for (let j = i + 1; j < points.length; j++) {
+          let q = points[j];
+          let dx = p.x - q.x;
+          let dy = p.y - q.y;
+          let dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.strokeStyle = `rgba(0,255,255,${1 - dist / 120})`;
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      menuToggle.querySelector('i').classList.toggle('fa-bars');
+      menuToggle.querySelector('i').classList.toggle('fa-times');
+    });
+  </script>
+</body>
+</html>
